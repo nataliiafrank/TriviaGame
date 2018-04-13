@@ -1,0 +1,69 @@
+@font-face {
+    font-family: "Friends Font"; /*a name to be used later*/
+    src: url("../fonts/GABRWFFR.TTF"); /* URL to Font */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body { 
+   font-family: "Friends Font";
+   font-size: 20px;
+   text-align: center;
+   line-height: 36px;
+   color: white;
+   background: black;
+}
+
+h1 {
+    padding-top: 20px;
+    font-size: 80px;
+    font-weight: bold;
+    letter-spacing: 15px;
+    margin: 50px 0;
+}
+
+#logo {
+    margin-bottom: 50px;
+    width: 100%;
+}
+
+#start-button button {
+    font-family: "Friends Font";
+    padding: 20px 100px;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 40px;
+} 
+
+.questions-screen {
+    background-color: white;
+    border-radius: 20px;
+    color: black;
+    width: 80%;
+    margin: auto;
+    font-family: 'Averia Serif Libre', cursive;
+    padding-bottom: 60px;
+}
+
+.hide {
+    display: none;
+}
+.visible {
+    display: block;
+}
+
+.questions-screen h1 {
+    font-family: "Friends Font";
+    font-size: 50px;
+    letter-spacing: 1px;
+}
+
+.question {
+    font-size: 30px;
+}
+
+.answer:hover {
+    border: 2px solid #ccc;
+}

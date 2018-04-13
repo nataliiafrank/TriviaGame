@@ -5,11 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Trivia Game</title>
+    <link href="https://fonts.googleapis.com/css?family=Averia+Serif+Libre" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
- 
+    <div class="start-screen">
+        <h1>TRIVIA</h1>
+    
+        <img src="assets/images/friensd-logo.jpg" id="logo" alt="friends-logo">
+
+        <div id="start-button">
+            <button>Start</button> 
+        </div>
+    </div>
+    
+    <div class="questions-screen hide">
+        <h1>Friends Trivia</h1>
+
+        <div class="timer"></div>
+        <div class="question"></div>
+        <div class="answers">
+            <div class="answer a"></div>
+            <div class="answer b"></div>
+            <div class="answer c"></div>
+            <div class="answer d"></div>
+        </div>
+        <div class="status"> </div>
+        <div class="correct-a"> </div>
+        <div class="gif"> </div>
+
+    </div>
+    
     
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="assets/javascript/app.js"></script>

@@ -11,17 +11,17 @@ body {
    font-family: "Friends Font";
    font-size: 20px;
    text-align: center;
-   line-height: 36px;
+   line-height: 42px;
    color: white;
    background: black;
 }
 
 h1 {
-    padding-top: 20px;
-    font-size: 80px;
+    padding-top: 40px;
+    font-size: 90px;
     font-weight: bold;
     letter-spacing: 15px;
-    margin: 50px 0;
+    margin: 40px 0;
 }
 
 #logo {
@@ -29,7 +29,7 @@ h1 {
     width: 100%;
 }
 
-#start-button button {
+#start-button button, .start-over {
     font-family: "Friends Font";
     padding: 20px 100px;
     font-weight: bold;
@@ -44,13 +44,12 @@ h1 {
     width: 80%;
     margin: auto;
     font-family: 'Averia Serif Libre', cursive;
-    padding-bottom: 60px;
-}
-
-.hide {
+    padding: 10px 10px 60px 10px;
+    margin-top: 40px;
     display: none;
 }
-.visible {
+
+#visible {
     display: block;
 }
 
@@ -64,6 +63,19 @@ h1 {
     font-size: 30px;
 }
 
+.question, .answers, .status,
+.gif, .correct-a, .last-screen {
+    display: none;
+}
+
 .answer:hover {
     border: 2px solid #ccc;
+}
+
+.correct-a {
+    font-size: 24px;
+}
+.start-over {
+    border: 3px, solid, black;
+    margin-top: 10px;
 }

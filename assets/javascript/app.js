@@ -1,6 +1,5 @@
 var trivia = {
-    myQuestions: [
-        {
+    myQuestions: [{
             question: "To get over Richard, what did Monica start making?",
             answers: {
                 a: "Marmalade",
@@ -103,20 +102,27 @@ var trivia = {
     ],
 
     currentQuestion: 0,
-    
-    startScreen: function(){
-       $("#start-button").click(function(){
+    correct: 0,
+    incorrect: 0,
+    outTime: 0,
+
+    startScreen: function () {
+        $("#start-button").click(function () {
             $('.start-screen').remove();
             $(".questions-screen").removeClass("hide");
-            trivia.render(trivia.myQuestions[trivia.currentQuestion]);
-            trivia.timeRemaining();
-            trivia.OutOfTime();
-            trivia.gameStart();
-       }) 
+            this.gameStart();
+            this.clickHandler();
+        }.bind(this));
     },
 
-    render: function(currentQuestion){
-        $(".questions-screen").addClass("visible");
+    gameStart: function () {
+        this.render(this.myQuestions[this.currentQuestion]);
+        this.countDown();
+    },
+
+    render: function (currentQuestion) {
+        $(".timer").text("Time Remaining: " + trivia.time + " seconds");
+        $(".questions-screen, .question, .answers", ).attr("id", "visible");
         $(".question").text(currentQuestion.question);
         $(".a").text(currentQuestion.answers.a);
         $(".b").text(currentQuestion.answers.b);
@@ -124,53 +130,94 @@ var trivia = {
         $(".d").text(currentQuestion.answers.d);
     },
 
-    clickHandler: function(){
-        $(".answer").click(function(event){
-            if($(event.currentTarget).text() === this.myQuestions[this.currentQuestion].correctAnswer){
-                $(".questions-screen").removeClass("visible");
+    clickHandler: function () {
+        $(".answer").click(function (event) {
+            if ($(event.currentTarget).text() === this.myQuestions[this.currentQuestion].correctAnswer) {
                 $(".status").text("CORRECT! YOU GOT IT!");
                 $(".gif").html('<img src="assets/images/win.gif">');
-                $(".status, .gif").addClass("visible");
-            }
-            else{
+                $(".status, .gif").attr("id", "visible");
+                $(".question, .answers").removeAttr("id");
+                trivia.correct++;
+            } else {
                 $(".status").text("NOPE! NOT THIS TIME!");
                 $(".correct-a").text("Correct answer is: " + this.myQuestions[this.currentQuestion].correctAnswer);
                 $(".gif").html('<img src="assets/images/loose.gif">');
-                $(".status, .correct-a, .gif").addClass("visible");
+                $(".status, .correct-a, .gif").attr("id", "visible");
+                $(".question, .answers").removeAttr("id");
+                trivia.incorrect++;
             };
-
-            this.currentQuestion +=1;
+            trivia.currentQuestion += 1;
+            clearInterval(trivia.intervalID);
+            trivia.messageScreen();
         }.bind(this));
     },
 
-    countDown: 10,
-
-    OutOfTime: function(){
-        setTimeout(function(){
-            $(".status").text("You've run out of time");
-            $(".correct-a").text("Correct answer is: " + this.myQuestions[this.currentQuestion]); 
-            $(".gif").html('<img src="assets/images/out-of-time.gif">');
-        }.bind(this), 1000 * this.countDown)
+    OutOfTime: function () {
+        $(".status").text("You've run out of time");
+        $(".correct-a").text("Correct answer is: " + this.myQuestions[this.currentQuestion].correctAnswer);
+        $(".gif").html('<img src="assets/images/out-of-time.gif">');
+        $(".status, .correct-a, .gif").attr("id", "visible");
+        $(".question, .answers").removeAttr("id");
+        trivia.currentQuestion += 1;
+        trivia.outTime++;
+        trivia.messageScreen();
     },
 
-    timeRemaining: function(){
-        this.countDown -= 1;
-        console.log(this.countDown)
-        $(".timer").text("Time Remaining: " + this.countDown + " seconds");
-    }.bind(this),
-
-    interval: function(){
-        setInterval(this.timeRemaining(), 1000)
+    messageScreen: function () {
+        var treeSeconds = setTimeout(function () {
+            if (trivia.currentQuestion === trivia.myQuestions.length) {
+                trivia.finalscreen()
+            } else {
+                trivia.nextQuestion()
+            }
+        }, 3000);
     },
-    
-    gameStart: function(){
+
+    nextQuestion: function () {
+        $(".question, .answers").attr("id", "visible");
+        $(".status, .correct-a, .gif").removeAttr("id");
+        trivia.time = 15;
+        trivia.countDown();
         this.render(this.myQuestions[this.currentQuestion]);
-        this.clickHandler();  
     },
-                                                                                                                                                                                                                                                                                                                                                                    
+
+    finalscreen: function () {
+        $(".status, .correct-a, .gif").removeAttr("id");
+        $(".correct").text(trivia.correct);
+        $(".incorrect").text(trivia.incorrect);
+        $(".outTime").text(trivia.outTime);
+        $(".last-screen").attr("id", "visible");
+        $(".start-over").click(function () {
+            trivia.reset();
+        });
+    },
+
+    time: 15,
+    intervalID: 0,
+
+    timeRemaining: function () {
+        trivia.time -= 1;
+        $(".timer").text("Time Remaining: " + trivia.time + " seconds");
+        if (trivia.time <= 0) {
+            trivia.OutOfTime();
+            clearInterval(trivia.intervalID)
+        }
+    },
+
+    countDown: function () {
+        trivia.intervalID = setInterval(this.timeRemaining, 1000);
+    },
+
+    reset: function () {
+        $(".last-screen").removeAttr("id");
+        clearInterval(this.intervalID);
+        this.time = 15;
+        this.currentQuestion = 0;
+        this.correct = 0;
+        this.incorrect = 0;
+        this.outTime = 0;
+        trivia.gameStart();
+    },
 }
 
 trivia.startScreen();
-
-                    
-    

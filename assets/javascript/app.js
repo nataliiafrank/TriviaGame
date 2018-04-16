@@ -109,7 +109,6 @@ var trivia = {
     startScreen: function () {
         $("#start-button").click(function () {
             $('.start-screen').remove();
-            $(".questions-screen").removeClass("hide");
             this.gameStart();
             this.clickHandler();
         }.bind(this));

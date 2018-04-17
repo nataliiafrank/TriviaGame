@@ -1,4 +1,5 @@
 var trivia = {
+    // Array of questions and answers
     myQuestions: [{
             question: "To get over Richard, what did Monica start making?",
             answers: {
@@ -106,6 +107,7 @@ var trivia = {
     incorrect: 0,
     outTime: 0,
 
+    // Starts the game when a start button is clicked
     startScreen: function () {
         $("#start-button").click(function () {
             $('.start-screen').remove();
@@ -114,11 +116,13 @@ var trivia = {
         }.bind(this));
     },
 
+    // Renders current question on the screen and starts a countdown
     gameStart: function () {
         this.render(this.myQuestions[this.currentQuestion]);
         this.countDown();
     },
 
+    // Rendering function
     render: function (currentQuestion) {
         $(".timer").text("Time Remaining: " + trivia.time + " seconds");
         $(".questions-screen, .question, .answers", ).attr("id", "visible");
@@ -129,6 +133,7 @@ var trivia = {
         $(".d").text(currentQuestion.answers.d);
     },
 
+    // Right/Wrong answer handler
     clickHandler: function () {
         $(".answer").click(function (event) {
             if ($(event.currentTarget).text() === this.myQuestions[this.currentQuestion].correctAnswer) {
@@ -146,11 +151,12 @@ var trivia = {
                 trivia.incorrect++;
             };
             trivia.currentQuestion += 1;
-            clearInterval(trivia.intervalID);
-            trivia.messageScreen();
+            clearInterval(trivia.intervalID); // Stops countdown
+            trivia.messageScreen(); 
         }.bind(this));
     },
 
+    // Handler for when user is out of time
     OutOfTime: function () {
         $(".status").text("You've run out of time");
         $(".correct-a").text("Correct answer is: " + this.myQuestions[this.currentQuestion].correctAnswer);
@@ -162,6 +168,7 @@ var trivia = {
         trivia.messageScreen();
     },
 
+    // Timeout for showing the message between questions
     messageScreen: function () {
         var treeSeconds = setTimeout(function () {
             if (trivia.currentQuestion === trivia.myQuestions.length) {
@@ -172,6 +179,7 @@ var trivia = {
         }, 3000);
     },
 
+    // Renders a new question and start a new countdown
     nextQuestion: function () {
         $(".question, .answers").attr("id", "visible");
         $(".status, .correct-a, .gif").removeAttr("id");
@@ -180,6 +188,8 @@ var trivia = {
         this.render(this.myQuestions[this.currentQuestion]);
     },
 
+    // Showes ammount of correct, incorrect and unanswerd questions
+    // and resets the game when a 'Start Over' button is being pressed 
     finalscreen: function () {
         $(".status, .correct-a, .gif").removeAttr("id");
         $(".correct").text(trivia.correct);
@@ -191,9 +201,10 @@ var trivia = {
         });
     },
 
-    time: 15,
-    intervalID: 0,
+    time: 15, 
+    intervalID: 0, // Variable for clearing the interval
 
+    // Rendering a cowntdown to the screen every second
     timeRemaining: function () {
         trivia.time -= 1;
         $(".timer").text("Time Remaining: " + trivia.time + " seconds");
@@ -203,6 +214,7 @@ var trivia = {
         }
     },
 
+    // Sets an interval for a countdown
     countDown: function () {
         trivia.intervalID = setInterval(this.timeRemaining, 1000);
     },
